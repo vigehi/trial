@@ -24,6 +24,9 @@ public class MainController {
     private TableColumn<Car, String> carColumn;
 
     @FXML
+    private TableColumn<Car, String> ownerColumn;
+
+    @FXML
     private TableView<Loader> loadersTable;
 
     @FXML
@@ -69,6 +72,7 @@ public class MainController {
 
             // Set cell value factories for the table columns
             carColumn.setCellValueFactory(new PropertyValueFactory<>("car"));
+            ownerColumn.setCellValueFactory(new PropertyValueFactory<>("Owner"));
             loaderColumn.setCellValueFactory(new PropertyValueFactory<>("loader"));
             weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
             timestampColumn.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
