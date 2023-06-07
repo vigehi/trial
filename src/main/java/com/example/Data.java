@@ -21,7 +21,7 @@ public class Data {
         this.weight = new SimpleStringProperty(weight);
     }
 
-    public Data(String timestamp2, String car_reg_number, String loader_name, String weight2) {
+    public Data(String timestamp, String car_reg_number, String loader_name, String weight) {
     }
 
     public LocalDateTime getTimestamp() {

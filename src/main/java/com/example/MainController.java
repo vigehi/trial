@@ -87,57 +87,44 @@ public class MainController {
         }
     }
 
-    private void handleCarTableClick() {
-        Car selectedCar = carsTable.getSelectionModel().getSelectedItem();
-        if (selectedCar != null) {
-            String carName = selectedCar.getCar();
-            System.out.println("Selected Car: " + carName);
+    private Car selectedCar;
+private Loader selectedLoader;
+private Weight selectedWeight;
 
-            Loader selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
-            String loaderName = (selectedLoader != null) ? selectedLoader.getLoader() : "";
-            System.out.println("Selected Loader: " + loaderName);
+private void handleCarTableClick() {
+    selectedCar = carsTable.getSelectionModel().getSelectedItem();
+    insertDataIfSelectionComplete();
+}
 
-            Weight selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
-            String weightValue = (selectedWeight != null) ? selectedWeight.getWeight() : "";
+private void handleLoadersTableClick() {
+    selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
+    insertDataIfSelectionComplete();
+}
 
-            insertDataIntoDatabase(carName, loaderName, weightValue);
-        }
+private void handleWeightsTableClick() {
+    selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
+    insertDataIfSelectionComplete();
+}
+
+private void insertDataIfSelectionComplete() {
+    if (selectedCar != null && selectedLoader != null && selectedWeight != null) {
+        String carName = selectedCar.getCar();
+        String loaderName = selectedLoader.getLoader();
+        String weightValue = selectedWeight.getWeight();
+
+        insertDataIntoDatabase(carName, loaderName, weightValue);
+
+        // Reset the selections
+        carsTable.getSelectionModel().clearSelection();
+        loadersTable.getSelectionModel().clearSelection();
+        weightsTable.getSelectionModel().clearSelection();
+
+        selectedCar = null;
+        selectedLoader = null;
+        selectedWeight = null;
     }
+}
 
-    private void handleLoadersTableClick() {
-        Loader selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
-        if (selectedLoader != null) {
-            String loaderName = selectedLoader.getLoader();
-            System.out.println("Selected Loader: " + loaderName);
-
-            Car selectedCar = carsTable.getSelectionModel().getSelectedItem();
-            String carName = (selectedCar != null) ? selectedCar.getCar() : "";
-            System.out.println("Selected Car: " + carName);
-
-            Weight selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
-            String weightValue = (selectedWeight != null) ? selectedWeight.getWeight() : "";
-
-            insertDataIntoDatabase(carName, loaderName, weightValue);
-        }
-    }
-
-    private void handleWeightsTableClick() {
-        Weight selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
-        if (selectedWeight != null) {
-            String weightValue = selectedWeight.getWeight();
-            System.out.println("Selected Weight: " + weightValue);
-
-            Car selectedCar = carsTable.getSelectionModel().getSelectedItem();
-            String carName = (selectedCar != null) ? selectedCar.getCar() : "";
-            System.out.println("Selected Car: " + carName);
-
-            Loader selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
-            String loaderName = (selectedLoader != null) ? selectedLoader.getLoader() : "";
-            System.out.println("Selected Loader: " + loaderName);
-
-            insertDataIntoDatabase(carName, loaderName, weightValue);
-        }
-    }
     private void insertDataIntoDatabase(String carName, String loaderName, String weightValue) {
         LocalDateTime now = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);
@@ -159,27 +146,23 @@ public class MainController {
     
     private void populateDataTable() {
         try {
-          ResultSet resultSet = connection
-            .createStatement()
-            .executeQuery("SELECT * FROM data1");
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM data1");
             dataTable.getItems().clear();
     
-          while (resultSet.next()) {
-            String timestampString = resultSet.getString("timestamp");
-            LocalDateTime timestamp = LocalDateTime.parse(timestampString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSX"));
-            String car_reg_number = resultSet.getString("car_reg_number");
-            String loader_name = resultSet.getString("loader_name");
-            String weight = resultSet.getString("weight");
+            while (resultSet.next()) {
+                LocalDateTime timestamp = resultSet.getTimestamp("timestamp").toLocalDateTime();
+                String car_reg_number = resultSet.getString("car_reg_number");
+                String loader_name = resultSet.getString("loader_name");
+                String weight = resultSet.getString("weight");
     
-            dataTable
-              .getItems()
-              .add(new Data(timestamp, car_reg_number, loader_name, weight));
-          }
+                dataTable.getItems().add(new Data(timestamp, car_reg_number, loader_name, weight));
+            }
         } catch (SQLException e) {
-          e.printStackTrace();
-          // Handle query execution error
+            e.printStackTrace();
+            // Handle query execution error
         }
-      }
+    }
+    
     
         
 
