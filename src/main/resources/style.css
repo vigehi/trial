@@ -1,0 +1,24 @@
+
+.hbox {
+    -fx-spacing: 10;
+    -fx-background-color: #f8f8f8;
+}
+
+.table-view {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f0f0f0;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #f5f5f5;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #a0c8ff;
+    -fx-text-fill: #ffffff;
+}
