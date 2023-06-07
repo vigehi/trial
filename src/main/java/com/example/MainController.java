@@ -83,7 +83,6 @@ public class MainController {
             weightsTable.setOnMouseClicked(event -> handleWeightsTableClick());
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle SQL exception
         }
     }
 
@@ -140,7 +139,6 @@ private void insertDataIfSelectionComplete() {
             populateDataTable();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle SQL exception
         }
     }
     
@@ -159,7 +157,6 @@ private void insertDataIfSelectionComplete() {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle query execution error
         }
     }
     
@@ -176,7 +173,6 @@ private void insertDataIfSelectionComplete() {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle query execution error
         }
     }
 
@@ -189,7 +185,6 @@ private void insertDataIfSelectionComplete() {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle query execution error
         }
     }
 
@@ -202,7 +197,6 @@ private void insertDataIfSelectionComplete() {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle query execution error
         }
     }
 }

@@ -1,4 +1,5 @@
 package com.example;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -24,5 +25,9 @@ public class App extends Application {
     }
 }
 
-// java --module-path /home/oga/pro1/desk/javafx-sdk-20.0.1/lib --add-modules javafx.controls,javafx.fxml -cp target/classes com.example.App
-// udo update-alternatives --config java
+// java --module-path /home/oga/trial/javafx-sdk-20.0.1/lib --add-modules
+// javafx.controls,javafx.fxml -cp target/classes com.example.App
+// sudo update-alternatives --config java
+// java --module-path /home/oga/trial/javafx-sdk-20.0.1/lib --add-modules
+// javafx.controls,javafx.fxml -cp
+// target/classes:/home/oga/trial/postgresql-42.6.0.jar com.example.App

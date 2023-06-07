@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.example.AppTest" time="0.011" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.example.AppTest" time="0.006" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="java.vm.version" value="19.0.2+7-Ubuntu-0ubuntu322.04"/>
+    <property name="java.vm.version" value="19.0.2+7-Ubuntu-0ubuntu4"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-19-openjdk-amd64/lib"/>
-    <property name="maven.multiModuleProjectDirectory" value="/home/oga/pro1/trial"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/oga/trial"/>
     <property name="java.vm.vendor" value="Private Build"/>
     <property name="java.vendor.url" value="Unknown"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -13,9 +13,9 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/home/oga/pro1/trial"/>
-    <property name="java.vm.compressedOopsMode" value="32-bit"/>
-    <property name="java.runtime.version" value="19.0.2+7-Ubuntu-0ubuntu322.04"/>
+    <property name="user.dir" value="/home/oga/trial"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="java.runtime.version" value="19.0.2+7-Ubuntu-0ubuntu4"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
@@ -32,7 +32,7 @@
     <property name="java.class.version" value="63.0"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="5.19.0-43-generic"/>
+    <property name="os.version" value="6.2.0-20-generic"/>
     <property name="library.jansi.path" value="/usr/share/maven/lib/jansi-native"/>
     <property name="user.home" value="/home/oga"/>
     <property name="user.timezone" value="Africa/Nairobi"/>
@@ -42,7 +42,7 @@
     <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
     <property name="java.vm.specification.version" value="19"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install -U"/>
     <property name="java.home" value="/usr/lib/jvm/java-19-openjdk-amd64"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -57,5 +57,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.endian" value="little"/>
   </properties>
-  <testcase classname="com.example.AppTest" name="testApp" time="0.011"/>
+  <testcase classname="com.example.AppTest" name="testApp" time="0.006"/>
 </testsuite>
