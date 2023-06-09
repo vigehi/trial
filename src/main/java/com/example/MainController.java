@@ -143,17 +143,20 @@ public class MainController {
                     carStatement.setString(1, carName);
                     carStatement.setString(2, ownerName);
                     carStatement.executeUpdate();
+                    populateCarsTable();
                 }
 
                 String insertLoadersQuery = "INSERT INTO loaders (loader_name) VALUES (?)";
                 try (PreparedStatement loadersStatement = connection.prepareStatement(insertLoadersQuery)) {
                     loadersStatement.setString(1, loaderName);
                     loadersStatement.executeUpdate();
+                    populateLoadersTable();
                 }
                 String insertWeightQuery = "INSERT INTO weight (weight_value) VALUES (CAST(? AS double precision))";
                 try (PreparedStatement weightStatement = connection.prepareStatement(insertWeightQuery)) {
                     weightStatement.setString(1, weightValue);
                     weightStatement.executeUpdate();
+                    populateWeightsTable();
                 }
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -247,6 +250,7 @@ public class MainController {
 
     private void populateCarsTable() {
         try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT car_name, owner_name FROM car")) {
+            carsTable.getItems().clear();
             while (resultSet.next()) {
                 String car_name = resultSet.getString("car_name");
                 String owner_name = resultSet.getString("owner_name");
@@ -260,6 +264,7 @@ public class MainController {
 
     private void populateLoadersTable() {
         try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT loader_name FROM loaders")) {
+            loadersTable.getItems().clear();
             while (resultSet.next()) {
                 String loader_name = resultSet.getString("loader_name");
 
@@ -272,6 +277,7 @@ public class MainController {
 
     private void populateWeightsTable() {
         try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT weight_value FROM weight")) {
+            weightsTable.getItems().clear();
             while (resultSet.next()) {
                 String weight_value = resultSet.getString("weight_value");
 
