@@ -1,17 +1,24 @@
 package com.example;
 
 import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.lang3.tuple.Triple;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
+import javafx.scene.control.Alert;
 
 public class MainController {
     @FXML
@@ -53,6 +60,8 @@ public class MainController {
     @FXML
     private TableColumn<Data, String> weight1Column;
 
+    @FXML
+    private Button addDataButton;
     private Connection connection;
 
     // Database connection details
@@ -62,15 +71,12 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        // Establish the database connection
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             populateCarsTable();
             populateLoadersTable();
             populateWeightsTable();
             populateDataTable();
-
-            // Set cell value factories for the table columns
             carColumn.setCellValueFactory(new PropertyValueFactory<>("car"));
             ownerColumn.setCellValueFactory(new PropertyValueFactory<>("Owner"));
             loaderColumn.setCellValueFactory(new PropertyValueFactory<>("loader"));
@@ -90,43 +96,120 @@ public class MainController {
         }
     }
 
-    private Car selectedCar;
-private Loader selectedLoader;
-private Weight selectedWeight;
+    @FXML
 
-private void handleCarTableClick() {
-    selectedCar = carsTable.getSelectionModel().getSelectedItem();
-    insertDataIfSelectionComplete();
-}
+    private void addDataButtonClicked(ActionEvent event) {
+        Dialog<DataEntry> dialog = new Dialog<>();
+        dialog.setTitle("Add Data");
+        dialog.setHeaderText("Enter Car, Owner, Loader, and Weight Details");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        Label carLabel = new Label("Car:");
+        Label ownerLabel = new Label("Owner:");
+        Label loaderLabel = new Label("Loader:");
+        Label weightLabel = new Label("Weight:");
 
-private void handleLoadersTableClick() {
-    selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
-    insertDataIfSelectionComplete();
-}
+        TextField carTextField = new TextField();
+        TextField ownerTextField = new TextField();
+        TextField loaderTextField = new TextField();
+        TextField weightTextField = new TextField();
 
-private void handleWeightsTableClick() {
-    selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
-    insertDataIfSelectionComplete();
-}
+        GridPane gridPane = new GridPane();
+        gridPane.add(carLabel, 0, 0);
+        gridPane.add(carTextField, 1, 0);
+        gridPane.add(ownerLabel, 0, 1);
+        gridPane.add(ownerTextField, 1, 1);
+        gridPane.add(loaderLabel, 0, 2);
+        gridPane.add(loaderTextField, 1, 2);
+        gridPane.add(weightLabel, 0, 3);
+        gridPane.add(weightTextField, 1, 3);
 
-private void insertDataIfSelectionComplete() {
-    if (selectedCar != null && selectedLoader != null && selectedWeight != null) {
-        String carName = selectedCar.getCar();
-        String loaderName = selectedLoader.getLoader();
-        String weightValue = selectedWeight.getWeight();
+        dialog.getDialogPane().setContent(gridPane);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return new DataEntry(carTextField.getText(), ownerTextField.getText(), loaderTextField.getText(),
+                        weightTextField.getText());
+            }
+            return null;
+        });
 
-        insertDataIntoDatabase(carName, loaderName, weightValue);
+        dialog.showAndWait().ifPresent(dataEntry -> {
+            String carName = dataEntry.getCarName();
+            String ownerName = dataEntry.getOwnerName();
+            String loaderName = dataEntry.getLoaderName();
+            String weightValue = dataEntry.getWeightValue();
+            try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+                String insertCarQuery = "INSERT INTO car (car_name, owner_name) VALUES (?, ?)";
+                try (PreparedStatement carStatement = connection.prepareStatement(insertCarQuery)) {
+                    carStatement.setString(1, carName);
+                    carStatement.setString(2, ownerName);
+                    carStatement.executeUpdate();
+                }
 
-        // Reset the selections
-        carsTable.getSelectionModel().clearSelection();
-        loadersTable.getSelectionModel().clearSelection();
-        weightsTable.getSelectionModel().clearSelection();
+                String insertLoadersQuery = "INSERT INTO loaders (loader_name) VALUES (?)";
+                try (PreparedStatement loadersStatement = connection.prepareStatement(insertLoadersQuery)) {
+                    loadersStatement.setString(1, loaderName);
+                    loadersStatement.executeUpdate();
+                }
+                String insertWeightQuery = "INSERT INTO weight (weight_value) VALUES (CAST(? AS double precision))";
+                try (PreparedStatement weightStatement = connection.prepareStatement(insertWeightQuery)) {
+                    weightStatement.setString(1, weightValue);
+                    weightStatement.executeUpdate();
+                }
 
-        selectedCar = null;
-        selectedLoader = null;
-        selectedWeight = null;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Data Entry");
+                alert.setHeaderText("Data Inserted Successfully");
+                alert.setContentText("Data has been inserted into the tables.");
+                alert.showAndWait();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Show an error message
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Data Entry Error");
+                alert.setContentText("An error occurred while inserting data into the tables.");
+                alert.showAndWait();
+            }
+        });
     }
-}
+
+    private Car selectedCar;
+    private Loader selectedLoader;
+    private Weight selectedWeight;
+
+    private void handleCarTableClick() {
+        selectedCar = carsTable.getSelectionModel().getSelectedItem();
+        insertDataIfSelectionComplete();
+    }
+
+    private void handleLoadersTableClick() {
+        selectedLoader = loadersTable.getSelectionModel().getSelectedItem();
+        insertDataIfSelectionComplete();
+    }
+
+    private void handleWeightsTableClick() {
+        selectedWeight = weightsTable.getSelectionModel().getSelectedItem();
+        insertDataIfSelectionComplete();
+    }
+
+    private void insertDataIfSelectionComplete() {
+        if (selectedCar != null && selectedLoader != null && selectedWeight != null) {
+            String carName = selectedCar.getCar();
+            String loaderName = selectedLoader.getLoader();
+            String weightValue = selectedWeight.getWeight();
+
+            insertDataIntoDatabase(carName, loaderName, weightValue);
+
+            // Reset the selections
+            carsTable.getSelectionModel().clearSelection();
+            loadersTable.getSelectionModel().clearSelection();
+            weightsTable.getSelectionModel().clearSelection();
+
+            selectedCar = null;
+            selectedLoader = null;
+            selectedWeight = null;
+        }
+    }
 
     private void insertDataIntoDatabase(String carName, String loaderName, String weightValue) {
         LocalDateTime now = LocalDateTime.now();
@@ -138,34 +221,29 @@ private void insertDataIfSelectionComplete() {
             statement.setString(3, loaderName);
             statement.setString(4, weightValue);
             statement.executeUpdate();
-    
-            // Update the dataTable in the UI
             populateDataTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
     private void populateDataTable() {
         try {
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM data1");
             dataTable.getItems().clear();
-    
+
             while (resultSet.next()) {
                 LocalDateTime timestamp = resultSet.getTimestamp("timestamp").toLocalDateTime();
                 String car_reg_number = resultSet.getString("car_reg_number");
                 String loader_name = resultSet.getString("loader_name");
                 String weight = resultSet.getString("weight");
-    
+
                 dataTable.getItems().add(new Data(timestamp, car_reg_number, loader_name, weight));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    
-        
 
     private void populateCarsTable() {
         try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT car_name, owner_name FROM car")) {

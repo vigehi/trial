@@ -26,6 +26,7 @@
             </columns>
         </TableView>
 
+        <Button fx:id="addDataButton" text="Add Data" onAction="#addDataButtonClicked" />
     </HBox>
 
     <TableView fx:id="dataTable">

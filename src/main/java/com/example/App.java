@@ -28,6 +28,4 @@ public class App extends Application {
 // java --module-path /home/oga/trial/javafx-sdk-20.0.1/lib --add-modules
 // javafx.controls,javafx.fxml -cp target/classes com.example.App
 // sudo update-alternatives --config java
-// java --module-path /home/oga/trial/javafx-sdk-20.0.1/lib --add-modules
-// javafx.controls,javafx.fxml -cp
-// target/classes:/home/oga/trial/postgresql-42.6.0.jar com.example.App
+// java --module-path /home/oga/trial/javafx-sdk-20.0.1/lib --add-modules javafx.controls,javafx.fxml -cp  target/classes:/home/oga/trial/postgresql-42.6.0.jar com.example.App
