@@ -23,3 +23,29 @@
     -fx-background-color: #a0c8ff;
     -fx-text-fill: #ffffff;
 }
+
+.login-layout {
+    -fx-background-color: #f2f2f2;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.login-label {
+    -fx-font-size: 14px;
+}
+
+.login-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+}
+
+.login-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.login-button:pressed {
+    -fx-background-color: #398037;
+}
+
