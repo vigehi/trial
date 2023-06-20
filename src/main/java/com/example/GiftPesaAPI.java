@@ -32,7 +32,9 @@ public class GiftPesaAPI {
     public String generateAuthorizationToken() {
         try {
             URL url = new URL(BASE_URL + AUTH_ENDPOINT);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println(conn);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Basic " + encodeBase64(API_KEY));
             conn.setRequestProperty("Username", USERNAME);
@@ -60,7 +62,9 @@ public class GiftPesaAPI {
     public void getMerchants(String authorizationToken) {
         try {
             URL url = new URL(BASE_URL + MERCHANTS_ENDPOINT);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println(conn);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Bearer " + authorizationToken);
 
@@ -86,7 +90,9 @@ public class GiftPesaAPI {
     public void createDisbursement(String authorizationToken) {
         try {
             URL url = new URL(BASE_URL + DISBURSE_ENDPOINT);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println(conn);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + authorizationToken);
             conn.setRequestProperty("Content-Type", "application/json");
@@ -118,7 +124,9 @@ public class GiftPesaAPI {
     public void queryDisbursement(String authorizationToken, String disbursementId) {
         try {
             URL url = new URL(BASE_URL + QUERY_ENDPOINT + disbursementId);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println(conn);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Bearer " + authorizationToken);
 
@@ -144,7 +152,9 @@ public class GiftPesaAPI {
     public void redeemVoucher(String authorizationToken) {
         try {
             URL url = new URL(BASE_URL + REDEEM_ENDPOINT);
+            System.out.println(url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println(conn);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + authorizationToken);
             conn.setRequestProperty("Content-Type", "application/json");
