@@ -48,4 +48,48 @@
 .login-button:pressed {
     -fx-background-color: #398037;
 }
+/* CREATE FUNCTION process_invoice(json_master JSON, json_hotel JSON)
+RETURNS TABLE (
+    invoice_number VARCHAR(50),
+    voucher_number VARCHAR(50),
+    status INT,
+    reason VARCHAR(255)
+)
+AS $$
+DECLARE
+    invoice_no VARCHAR(50);
+    voucher_no VARCHAR(50);
+    status_val INT;
+    failure_reason VARCHAR(255);
+BEGIN
+    -- Check if the key is valid
+    IF NOT json_master ? 'key' THEN
+        RETURN QUERY SELECT NULL::VARCHAR, NULL::VARCHAR, 0::INT, 'Invalid key'::VARCHAR;
+        RETURN;
+    END IF;
 
+    -- Check for mandatory data missing
+    IF json_hotel ? 'mandatory_data' THEN
+        RETURN QUERY SELECT NULL::VARCHAR, NULL::VARCHAR, 0::INT, 'Missing mandatory data'::VARCHAR;
+        RETURN;
+    END IF;
+
+    -- Convert data to TRAACS Format
+    -- Perform the necessary data conversion and formatting steps here
+    -- ...
+
+    -- Save Invoice
+    -- Perform the invoice saving process and retrieve the invoice number, voucher number, status, and failure reason
+    -- ...
+
+    -- Set the values to be returned
+    invoice_number := 'INV-123'; -- Replace with the actual invoice number
+    voucher_number := 'VCH-456'; -- Replace with the actual voucher number
+    status_val := 1; -- Replace with the actual status value
+    failure_reason := NULL; -- Replace with the actual failure reason if applicable
+
+    -- Return the result
+    RETURN QUERY SELECT invoice_number, voucher_number, status_val, failure_reason;
+END;
+$$ LANGUAGE plpgsql;
+ */
