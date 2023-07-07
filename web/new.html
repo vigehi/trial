@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="new.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div id="mySidenav" class="sidenav">
+        <p class="logo"><span>TMS</span>-DEMO</p>
+        <a href="" class="icon-a"><i class="fa fa-home icons"></i>&nbsp;&nbsp;
+            Dashboard </a>
+        <a href="" class="icon-a"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;
+            Orders </a>
+        <a href="" class="icon-a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;
+            Settings </a>
+    </div>
+    <div id="main">
+        <div class="head">
+            <div class="col-div-6">
+                <span style="font-size: 30px; cursor: pointer; color: Black; " class="nav">&#9776; Dashboard</span>
+                <span style="font-size: 30px; cursor: pointer; color: Black; " class="nav2">&#9776; Dashboard</span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="col-div-3">
+            <div class="box">
+                <p>15<br /><span>Cars</span></p>
+                <i class="fa fa-car box-icon"></i>
+            </div>
+        </div>
+        <div class="col-div-3">
+            <div class="box">
+                <p>25<br /><span>Loaders</span></p>
+                <i class="fa fa-spinner box-icon"></i>       
+            </div>
+        </div>
+        <div class="col-div-3">
+            <div class="box">
+                <p>5<br /><span>Weight</span></p>
+                <i class="fa fa-gear box-icon"></i> 
+            </div>
+        </div>
+        <div class="clearfix">
+
+        </div>
+        <hr>
+        <br /> <br />
+
+        <div class="col-div-8">
+            <div class="box-8">
+            <div class="content-box">
+                <p>Latest Records<span>View All</span></p>
+                <br/>
+                <table>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Car Registration Number</th>
+                        <th>Car Owner name</th>
+                        <th>Loader Name</th>
+                        <th>Weight</th>
+                    </tr>
+                    <tr>
+                        <th>oga</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                    </tr>
+                    <tr>
+                        <th>oga</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                    </tr>
+                    <tr>
+                        <th>oga</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                    </tr>
+                    <tr>
+                        <th>oga</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                        <th>EDith</th>
+                        <th>Adegu</th>
+                    </tr>
+                </table>
+            </div>
+            </div>
+        </div>
+              <div class="clearfix"></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(".nav").click(function(){
+            $("#mySidenav").css('width', '100px');
+            $("#main").css('margin-left', '100px');
+            $(".logo").css('visibility', 'hidden');
+            $(".logo span").css('visibility', 'visible');
+            $(".logo span").css('margin-left', '-10px');
+            $(".icon-a").css('visibility', 'hidden');
+            $(".icons").css('visibility', 'visible');
+            $(".icons").css('margin-left', '-8px');
+            $(".nav").css('display', 'none');
+            $(".nav2").css('display', 'block');
+        });
+        $(".nav2").click(function(){
+            $("#mySidenav").css('width', '300px');
+            $("#main").css('margin-left', '300px');
+            $(".logo").css('visibility', 'visible');
+            $(".logo span").css('visibility', 'visible');
+            $(".icon-a").css('visibility', 'visible');
+            $(".icons").css('visibility', 'visible');
+            $(".nav").css('display', 'block');
+            $(".nav2").css('display', 'none');
+        });
+    </script>
+</body>
+
+</html>
